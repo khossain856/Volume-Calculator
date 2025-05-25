@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Volume Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@preline/preline@2.0.0/dist/preline.min.js"></script>
+    <script>
+        function calculateVolume() {
+            const accountBalance = parseFloat(document.getElementById('accountBalance').value);
+            const riskPercent = parseFloat(document.getElementById('riskPercent').value);
+            const stopLossPips = parseFloat(document.getElementById('stopLossPips').value);
+            const pipValue = parseFloat(document.getElementById('pipValue').value);
+            
+            if (isNaN(accountBalance) || isNaN(riskPercent) || isNaN(stopLossPips) || isNaN(pipValue)) {
+                document.getElementById('result').innerHTML = '<span class="text-red-500">Please enter valid numbers in all fields</span>';
+                return;
+            }
+            
+            if (stopLossPips === 0 || pipValue === 0) {
+                document.getElementById('result').innerHTML = '<span class="text-red-500">Stop Loss Pips and Pip Value cannot be zero</span>';
+                return;
+            }
+            
+            const riskAmount = accountBalance * (riskPercent / 100);
+            const denominator = stopLossPips * pipValue;
+            const volume = riskAmount / denominator;
+            
+            document.getElementById('result').innerHTML = `
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <p class="font-semibold">Calculated Volume: <span class="text-blue-600">${volume.toFixed(2)} lots</span></p>
+                    <p class="text-sm mt-2">Calculation breakdown:</p>
+                    <p class="text-sm">Risk Amount = ${accountBalance} × ${riskPercent}% = ${riskAmount.toFixed(2)}</p>
+                    <p class="text-sm">Denominator = ${stopLossPips} pips × ${pipValue} = ${denominator.toFixed(2)}</p>
+                    <p class="text-sm">Volume = ${riskAmount.toFixed(2)} / ${denominator.toFixed(2)} = ${volume.toFixed(2)} lots</p>
+                </div>
+            `;
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden p-6">
+            <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Trading Volume Calculator</h1>
+            <p class="text-gray-600 dark:text-gray-300 mb-6">
+                Volume = (Account Balance × Risk %) / (Stop Loss Pips × Pip Value per Lot)
+            </p>
+            
+            <div class="space-y-4">
+                <div>
+                    <label for="accountBalance" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Account Balance ($)</label>
+                    <input type="number" id="accountBalance" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" placeholder="1000">
+                </div>
+                
+                <div>
+                    <label for="riskPercent" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Risk Percentage (%)</label>
+                    <input type="number" id="riskPercent" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" placeholder="2">
+                </div>
+                
+                <div>
+                    <label for="stopLossPips" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Stop Loss (Pips)</label>
+                    <input type="number" id="stopLossPips" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" placeholder="20">
+                </div>
+                
+                <div>
+                    <label for="pipValue" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Pip Value per Lot ($)</label>
+                    <input type="number" id="pipValue" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" placeholder="10">
+                </div>
+                
+                <button onclick="calculateVolume()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-200">
+                    Calculate Volume
+                </button>
+            </div>
+            
+            <div id="result" class="mt-6"></div>
+        </div>
+    </div>
+</body>
+</html>
