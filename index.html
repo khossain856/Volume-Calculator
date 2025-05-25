@@ -37,6 +37,21 @@
                 </div>
             `;
         }
+
+        // Automatically convert pips to points
+        window.addEventListener('DOMContentLoaded', () => {
+            const stopLossPipsInput = document.getElementById('stopLossPips');
+            const stopLossPointsField = document.getElementById('stopLossPoints');
+
+            stopLossPipsInput.addEventListener('input', () => {
+                const pips = parseFloat(stopLossPipsInput.value);
+                if (!isNaN(pips)) {
+                    stopLossPointsField.value = (pips * 10).toFixed(0) + ' points';
+                } else {
+                    stopLossPointsField.value = '';
+                }
+            });
+        });
     </script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 min-h-screen">
@@ -61,6 +76,11 @@
                 <div>
                     <label for="stopLossPips" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Stop Loss (Pips)</label>
                     <input type="number" id="stopLossPips" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" placeholder="20">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Stop Loss (Points)</label>
+                    <input type="text" id="stopLossPoints" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-gray-100 dark:bg-gray-700 dark:text-white" readonly>
                 </div>
                 
                 <div>
