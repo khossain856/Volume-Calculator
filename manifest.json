@@ -2,7 +2,7 @@
   "name": "Trading Volume Calculator",
   "short_name": "VolumeCalc",
   "description": "Calculate trading volume based on risk parameters",
-  "start_url": "/",
+  "start_url": "/Volume-Calculator/",
   "display": "standalone",
   "background_color": "#4f46e5",
   "theme_color": "#4f46e5",
