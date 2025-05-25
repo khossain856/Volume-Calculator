@@ -1,10 +1,10 @@
 const CACHE_NAME = 'volume-calculator-v1';
 const ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png'
+  '/Volume-Calculator/',
+  '/Volume-Calculator/index.html',
+  '/Volume-Calculator/manifest.json',
+  '/Volume-Calculator/icons/icon-192.png',
+  '/Volume-Calculator/icons/icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {
